@@ -1,0 +1,646 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>VisionAI - AI Video Generator</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #080b16;
+      color: white;
+    }
+
+    /* NAVBAR */
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 8%;
+      background: #11162a;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .logo span {
+      color: #24d6c5;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 25px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #bbb;
+    }
+
+    .nav-links a:hover {
+      color: white;
+    }
+
+    .btn {
+      background: #7c5cff;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .btn:hover {
+      background: #6245e8;
+    }
+
+    /* HERO SECTION */
+
+    .hero {
+      text-align: center;
+      padding: 100px 20px 60px;
+    }
+
+    .hero h1 {
+      font-size: 60px;
+      margin-bottom: 25px;
+    }
+
+    .hero h1 span {
+      color: #7c5cff;
+    }
+
+    .hero p {
+      color: #aaa;
+      font-size: 18px;
+      max-width: 650px;
+      margin: auto;
+      line-height: 1.7;
+    }
+
+    .hero .btn {
+      margin-top: 30px;
+    }
+
+    /* VIDEO STUDIO */
+
+    .studio {
+      max-width: 850px;
+      margin: 30px auto 80px;
+      padding: 30px;
+      background: #11162a;
+      border-radius: 20px;
+      border: 1px solid #292e45;
+    }
+
+    .studio h2 {
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      color: #bbb;
+      margin: 15px 0 8px;
+    }
+
+    textarea,
+    select {
+      width: 100%;
+      padding: 14px;
+      border-radius: 10px;
+      border: 1px solid #343a55;
+      background: #080b16;
+      color: white;
+      font-size: 15px;
+    }
+
+    textarea {
+      height: 130px;
+      resize: vertical;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
+
+    .generate-btn {
+      width: 100%;
+      margin-top: 25px;
+      font-size: 16px;
+    }
+
+    #result {
+      margin-top: 20px;
+      padding: 18px;
+      background: #182c36;
+      border-radius: 10px;
+      color: #bffaf3;
+      display: none;
+      line-height: 1.7;
+    }
+
+    /* FEATURES */
+
+    .section-title {
+      text-align: center;
+      font-size: 35px;
+      margin-bottom: 15px;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      color: #aaa;
+      margin-bottom: 35px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      max-width: 1100px;
+      margin: auto;
+      padding: 0 20px;
+    }
+
+    .card {
+      background: #11162a;
+      padding: 25px;
+      border-radius: 15px;
+      border: 1px solid #292e45;
+    }
+
+    .card h3 {
+      margin: 15px 0;
+    }
+
+    .card p {
+      color: #aaa;
+      line-height: 1.6;
+    }
+
+    .icon {
+      font-size: 35px;
+    }
+
+    /* PRICING */
+
+    .pricing {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .price {
+      font-size: 32px;
+      font-weight: bold;
+      margin: 20px 0;
+    }
+
+    .card ul {
+      list-style: none;
+      color: #aaa;
+      line-height: 2;
+      margin-bottom: 20px;
+    }
+
+    /* FOOTER */
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      margin-top: 80px;
+      background: #11162a;
+      color: #aaa;
+    }
+
+    /* MOBILE RESPONSIVE */
+
+    @media (max-width: 768px) {
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero h1 {
+        font-size: 40px;
+      }
+
+      .controls,
+      .cards,
+      .pricing {
+        grid-template-columns: 1fr;
+      }
+
+      .studio {
+        margin: 30px 20px;
+        padding: 20px;
+      }
+
+      .hero {
+        padding-top: 60px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+
+  <nav>
+
+    <div class="logo">
+      Vision<span>AI</span>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#studio">Studio</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+    </ul>
+
+    <button class="btn" onclick="scrollToStudio()">
+      Try for Free
+    </button>
+
+  </nav>
+
+
+  <!-- HERO SECTION -->
+
+  <section class="hero" id="home">
+
+    <h1>
+      Turn Your Ideas Into
+      <span>AI Videos</span>
+    </h1>
+
+    <p>
+      Create amazing videos using artificial intelligence.
+      Enter your idea, select a style, and start your creative journey.
+    </p>
+
+    <button class="btn" onclick="scrollToStudio()">
+      Create a Video →
+    </button>
+
+  </section>
+
+
+  <!-- AI VIDEO STUDIO -->
+
+  <section id="studio">
+
+    <div class="studio">
+
+      <h2>🎬 AI Video Studio</h2>
+
+      <label for="prompt">
+        Describe Your Video
+      </label>
+
+      <textarea
+        id="prompt"
+        placeholder="Example: A cinematic sunrise over the mountains with smooth camera movement..."
+      ></textarea>
+
+
+      <div class="controls">
+
+        <div>
+
+          <label for="style">
+            Video Style
+          </label>
+
+          <select id="style">
+
+            <option>Cinematic</option>
+            <option>Realistic</option>
+            <option>Animation</option>
+            <option>3D</option>
+            <option>Documentary</option>
+
+          </select>
+
+        </div>
+
+
+        <div>
+
+          <label for="ratio">
+            Aspect Ratio
+          </label>
+
+          <select id="ratio">
+
+            <option>16:9 Landscape</option>
+            <option>9:16 Portrait</option>
+            <option>1:1 Square</option>
+
+          </select>
+
+        </div>
+
+
+        <div>
+
+          <label for="duration">
+            Duration
+          </label>
+
+          <select id="duration">
+
+            <option>5 Seconds</option>
+            <option>10 Seconds</option>
+            <option>15 Seconds</option>
+            <option>30 Seconds</option>
+
+          </select>
+
+        </div>
+
+      </div>
+
+
+      <button
+        class="btn generate-btn"
+        onclick="generateVideo()"
+      >
+        ✨ Generate AI Video
+      </button>
+
+
+      <div id="result"></div>
+
+    </div>
+
+  </section>
+
+
+  <!-- FEATURES SECTION -->
+
+  <section id="features">
+
+    <h2 class="section-title">
+      Everything You Need
+    </h2>
+
+    <p class="section-subtitle">
+      Powerful tools for your creative video workflow.
+    </p>
+
+
+    <div class="cards">
+
+      <div class="card">
+
+        <div class="icon">🪄</div>
+
+        <h3>Text to Video</h3>
+
+        <p>
+          Convert your text ideas into creative video concepts.
+        </p>
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="icon">🎨</div>
+
+        <h3>Creative Styles</h3>
+
+        <p>
+          Choose cinematic, realistic, animated, and 3D styles.
+        </p>
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="icon">⚡</div>
+
+        <h3>Fast Workflow</h3>
+
+        <p>
+          Prepare your video generation request in seconds.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- PRICING SECTION -->
+
+  <section id="pricing">
+
+    <h2 class="section-title">
+      Simple Pricing
+    </h2>
+
+    <p class="section-subtitle">
+      Choose a plan for your creative needs.
+    </p>
+
+
+    <div class="pricing">
+
+      <div class="card">
+
+        <h3>Starter</h3>
+
+        <div class="price">Free</div>
+
+        <ul>
+          <li>✓ 5 Projects</li>
+          <li>✓ Basic Styles</li>
+          <li>✓ Community Support</li>
+        </ul>
+
+        <button class="btn" onclick="selectPlan('Starter')">
+          Choose Plan
+        </button>
+
+      </div>
+
+
+      <div class="card">
+
+        <h3>Creator</h3>
+
+        <div class="price">₹499</div>
+
+        <ul>
+          <li>✓ 100 Projects</li>
+          <li>✓ Premium Styles</li>
+          <li>✓ Priority Processing</li>
+        </ul>
+
+        <button class="btn" onclick="selectPlan('Creator')">
+          Choose Plan
+        </button>
+
+      </div>
+
+
+      <div class="card">
+
+        <h3>Pro</h3>
+
+        <div class="price">₹1499</div>
+
+        <ul>
+          <li>✓ Unlimited Drafts</li>
+          <li>✓ Advanced Controls</li>
+          <li>✓ Team Collaboration</li>
+        </ul>
+
+        <button class="btn" onclick="selectPlan('Pro')">
+          Choose Plan
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- FOOTER -->
+
+  <footer>
+
+    <p>
+      © 2026 VisionAI | AI Video Generator
+    </p>
+
+  </footer>
+
+
+  <!-- JAVASCRIPT -->
+
+  <script>
+
+    function scrollToStudio() {
+
+      document.getElementById("studio").scrollIntoView({
+        behavior: "smooth"
+      });
+
+    }
+
+
+    function generateVideo() {
+
+      let prompt = document.getElementById("prompt").value.trim();
+
+      let style = document.getElementById("style").value;
+
+      let ratio = document.getElementById("ratio").value;
+
+      let duration = document.getElementById("duration").value;
+
+      let result = document.getElementById("result");
+
+
+      if (prompt === "") {
+
+        result.style.display = "block";
+
+        result.innerHTML =
+          "⚠️ Please enter a video description first.";
+
+        return;
+
+      }
+
+
+      result.style.display = "block";
+
+      result.innerHTML = `
+
+        <strong>✨ Demo Request Prepared!</strong>
+        <br><br>
+
+        <b>Prompt:</b> ${escapeHTML(prompt)}
+        <br>
+
+        <b>Style:</b> ${escapeHTML(style)}
+        <br>
+
+        <b>Aspect Ratio:</b> ${escapeHTML(ratio)}
+        <br>
+
+        <b>Duration:</b> ${escapeHTML(duration)}
+        <br><br>
+
+        Your video request is ready.
+        <br>
+
+        <small>
+          This is a front-end demo.
+          Connect an AI video API to generate a real video.
+        </small>
+
+      `;
+
+    }
+
+
+    function escapeHTML(text) {
+
+      return text.replace(/[&<>"']/g, function(character) {
+
+        const entities = {
+
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#39;"
+
+        };
+
+        return entities[character];
+
+      });
+
+    }
+
+
+    function selectPlan(plan) {
+
+      alert("You selected the " + plan + " plan.");
+
+    }
+
+  </script>
+
+</body>
+</html>
